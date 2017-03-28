@@ -11,6 +11,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"regexp"
+	"sort"
+
 	"github.com/coreos/go-semver/semver"
 	"github.com/kubernetes-incubator/kube-aws/cfnresource"
 	"github.com/kubernetes-incubator/kube-aws/coreos/amiregistry"
@@ -19,8 +22,6 @@ import (
 	"github.com/kubernetes-incubator/kube-aws/model/derived"
 	"github.com/kubernetes-incubator/kube-aws/netutil"
 	yaml "gopkg.in/yaml.v2"
-	"regexp"
-	"sort"
 )
 
 const (
@@ -453,21 +454,23 @@ type Cluster struct {
 }
 
 type Experimental struct {
-	Admission                Admission                `yaml:"admission"`
-	AuditLog                 AuditLog                 `yaml:"auditLog"`
-	Authentication           Authentication           `yaml:"authentication"`
-	AwsEnvironment           AwsEnvironment           `yaml:"awsEnvironment"`
-	AwsNodeLabels            AwsNodeLabels            `yaml:"awsNodeLabels"`
-	ClusterAutoscalerSupport ClusterAutoscalerSupport `yaml:"clusterAutoscalerSupport"`
-	EphemeralImageStorage    EphemeralImageStorage    `yaml:"ephemeralImageStorage"`
-	Kube2IamSupport          Kube2IamSupport          `yaml:"kube2IamSupport,omitempty"`
-	LoadBalancer             LoadBalancer             `yaml:"loadBalancer"`
-	TargetGroup              TargetGroup              `yaml:"targetGroup"`
-	NodeDrainer              NodeDrainer              `yaml:"nodeDrainer"`
-	NodeLabels               NodeLabels               `yaml:"nodeLabels"`
-	Plugins                  Plugins                  `yaml:"plugins"`
-	Taints                   []Taint                  `yaml:"taints"`
-	model.UnknownKeys        `yaml:",inline"`
+	Admission                   Admission                `yaml:"admission"`
+	AuditLog                    AuditLog                 `yaml:"auditLog"`
+	Authentication              Authentication           `yaml:"authentication"`
+	AwsEnvironment              AwsEnvironment           `yaml:"awsEnvironment"`
+	AwsNodeLabels               AwsNodeLabels            `yaml:"awsNodeLabels"`
+	ClusterAutoscalerSupport    ClusterAutoscalerSupport `yaml:"clusterAutoscalerSupport"`
+	EphemeralImageStorage       EphemeralImageStorage    `yaml:"ephemeralImageStorage"`
+	Kube2IamSupport             Kube2IamSupport          `yaml:"kube2IamSupport,omitempty"`
+	LoadBalancer                LoadBalancer             `yaml:"loadBalancer"`
+	TargetGroup                 TargetGroup              `yaml:"targetGroup"`
+	NodeDrainer                 NodeDrainer              `yaml:"nodeDrainer"`
+	NodeLabels                  NodeLabels               `yaml:"nodeLabels"`
+	Plugins                     Plugins                  `yaml:"plugins"`
+	DisableSecurityGroupIngress bool                     `yaml:"disableSecurityGroupIngress"`
+	NodeMonitorGracePeriod      string                   `yaml:"nodeMonitorGracePeriod"`
+	Taints                      []Taint                  `yaml:"taints"`
+	model.UnknownKeys           `yaml:",inline"`
 }
 
 type Admission struct {
